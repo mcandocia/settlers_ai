@@ -1,4 +1,4 @@
-from constants import edge_vertices, cell_vertices, cell_edges
+0from constants import edge_vertices, cell_vertices, cell_edges
 from constants import CONNECTED_EDGES
 from copy import copy 
 import numpy as np 
@@ -213,6 +213,7 @@ class Player(object):
 				V_longest_road, #188:189
 				V_visible_points) #189:190
 				)
+		#map + self + 3 players dim = 516 + 203 + 3*190 = 1289	
 		if external:
 			return self.visible_serialized_self
 		else:
@@ -248,7 +249,7 @@ class Player(object):
 		if external:
 			external_copy = copy(self.visible_serialized_self)
 			if zip_args:
-
+				pass
 		else:
 			internal_copy = copy(self.serialized_self)
 
@@ -285,3 +286,20 @@ class Player(object):
 		in tact
 		"""
 		print 'reset state not implemented yet'
+
+	def rel(self, player):
+		return (4 + self.order - player.order) % 4
+	#will be called often with None special_mode due to turn number
+	#relevance for probability calculation
+	def decision_serialization(self, special_mode=None):
+		"""
+		resource trade vectors [DIM=20]
+		card usage vector [DIM=5]
+		knight placement vector [DIM=19]
+		monopoly resource choice vector [DIM=5]
+		turn indicator [DIM=4]
+		#YEAR OF PLENTY RESOURCE VECTOR WILL BE DIRECTLY FORECASTED
+		#ALL BUILDING WILL BE DIRECTLY FORECASTED
+		#DIM = base_dim + 20 + 5 + 19 + 5 + 4
+		"""
+
